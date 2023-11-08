@@ -5,7 +5,7 @@
  *
  * Return: The pointer to the input command
  */
-char *promptINPUT(void)
+char *getINPUT(void)
 {
 	char *buff = NULL;
 	int n;
