@@ -12,8 +12,6 @@
  */
 int main(int argc, char **args, char **envp)
 {
-	add_current_dir_to_path();
-
 	while (1)
 	{
 		int i;
