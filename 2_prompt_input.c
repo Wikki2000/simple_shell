@@ -1,7 +1,10 @@
 #include "shell.h"
 
 /**
- * promptINPUT - Prompt and accept user command
+ * getINPUT - Prompt and accept user command
+ *
+ * Description: This function display prompt
+ * and then read user command
  *
  * Return: The pointer to the input command
  */
