@@ -10,10 +10,11 @@ int _strlen(char *string)
 {
 	int count = 0;
 
-	do {
+	while (*string)
+	{
 		count++;
 		string++;
-	} while (*string);
+	}
 
 	return (count);
 }

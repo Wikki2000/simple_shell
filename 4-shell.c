@@ -12,57 +12,42 @@
  */
 int main(int argc, char **args, char **envp)
 {
-	while (1)
+	(void)args;
+	(void)argc;
+
+	for (;;)
 	{
 		int i;
 		char *input = getINPUT();
 		char *token;
-		pid_t babyPROCCESS = fork();
+		char **command;
 
-		/* Ignore empty input */
 		if (_strlen(input) == 0)
 		{
 			free(input);
 			continue;
 		}
 
-		/* Implement exit functuion */
 		if (stringCOMPARE(input, "exit", 0) == 0)
 			exit(EXIT_SUCCESS);
 
-		/* Allocate memory to store arguement */
-		args = (char **) malloc(sizeof(char *) * 100);
-		if (args == NULL)
+		command = (char **) malloc(sizeof(char *) * 100);
+		if (command == NULL)
 		{
 			perror("Memory allocation fail");
 			exit(EXIT_FAILURE);
 		}
 
-		/* Split the input into command and arguments */
-                token  = strtok(input, " ");
-		args[0] = token;
-
-		for (i = 1; i < argc; i++)
-			args[i] = strtok(NULL, " ");
-		args[argc] = NULL;
-
-		if (babyPROCCESS < 0)
+		token  = _strtok(input, " ");
+		command[0] = token;
+		for (i = 1; token != NULL; i++)
 		{
-			perror("Fork failed");
-			exit(EXIT_FAILURE);
+			token = _strtok(NULL, " ");
+			command[i] = token;
 		}
-		else if (babyPROCCESS == 0)
-		{
-			execve(args[0], args, envp);
-			perror(args[0]);
-			exit(EXIT_FAILURE);
-		}
-		else
-		{
-			wait(NULL);
-			free(input);
-		}	
+		command[i] = NULL;
+		executeCOMMAND(command, envp);
+		free(input);
 	}
-
 	return (0);
 }

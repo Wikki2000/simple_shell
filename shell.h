@@ -18,6 +18,8 @@ int handle_failure(char *ptr);
 void add_current_dir_to_path();
 char *getINPUT();
 int stringCOMPARE(const char *str1, const char *str2, int index);
-void executeCOMMAND(char **argv, char **envp);
+char *_strchr(const char *str, int c);
+char *_strtok(char *str, const char *delim);
+void executeCOMMAND(char **args, char **envp);
 
 #endif
