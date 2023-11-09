@@ -17,7 +17,7 @@ ssize_t _getline(char **inputPTR, size_t *size, int input_STREAM);
 int handle_failure(char *ptr);
 void add_current_dir_to_path();
 char *getINPUT();
-int stringCOMPARE(const char *str1, const char *str2, int index);
+int stringCOMPARE(char *str1, char *str2, int index);
 void executeCOMMAND(char **argv, char **envp);
 
 #endif
