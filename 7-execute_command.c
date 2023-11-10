@@ -22,7 +22,7 @@ void executeCOMMAND(char **args, char **envp)
 	else if (babyPROCCESS == 0)
 	{
 		execve(args[0], args, envp);
-		perror(args[0]);
+		perror("#cisfun$");
 		exit(EXIT_FAILURE);
 	}
 	else
