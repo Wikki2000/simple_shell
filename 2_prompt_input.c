@@ -8,26 +8,18 @@
  *
  * Return: The pointer to the input command
  */
-char *getINPUT(void)
+int getINPUT(char **buff, size_t *size)
 {
-	char *buff = NULL;
-	int n;
-	size_t size = 0;
+	int val, n;
 
 	write(STDOUT_FILENO, "#cisfun$ ", 9);
+	fflush(stdout);
+	val = _getline(buff, size, STDIN_FILENO);
 
-	/* Handle error in reading input */
-	if (getline(&buff, &size, stdin) == -1)
-	{
-		perror("getline failed");
-		exit(EXIT_FAILURE);
-	}
-
-	n = _strlen(buff);
-
-	/* Remove the trailing "\n" character */
-	if (n > 0 && buff[n - 1] == '\n')
-		buff[n - 1] = '\0';
-
-	return (buff);
+	if (val == -1)
+		return (-1);
+	n = _strlen(*buff);
+	if (n > 0 && (*buff)[n - 1] == '\n')
+		(*buff)[n - 1] = '\0';
+	return (val);
 }
