@@ -2,6 +2,8 @@
 
 /**
  * getINPUT - Prompt and accept user command
+ * @buff: The buffer to store user input
+ * @size: The size of memory to be allocated
  *
  * Description: This function display prompt
  * and then read user command

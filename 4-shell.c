@@ -1,30 +1,6 @@
 #include "shell.h"
 
 /**
- *  str_tokenize - tokenize a command accepted from user
- * @input: user input to be tokenized
- * @args: buffer to store the tokenized string
- *
- * Return: array of tokenized user input
- */
-
-char **str_TOKENIZE(char *input, char **args)
-{
-	char *token = NULL;
-	int ac = 0;
-
-	token = strtok(input, " ");
-	while (token != NULL)
-	{
-		args[ac] = token;
-		ac++;
-		token = strtok(NULL, " ");
-	}
-	args[ac] = NULL;
-	return (args);
-}
-
-/**
  * main - Entry point of program
  * @argc: Command-line arguement count
  * @argv: An array of command-line arguement
@@ -44,7 +20,7 @@ int main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 
-	while (1)
+	for (;;)
 	{
 		val = getINPUT(&input, &size);
 		if (val == -1)
@@ -53,13 +29,20 @@ int main(int argc, char **argv, char **envp)
 			continue;
 		if (stringCOMPARE(input, "exit", 0) == 0)
 			exit(EXIT_SUCCESS);
+
+		else if (stringCOMPARE(input, "env", 0) == 0)
+		{
+			printENV();
+			continue;
+		}
+
 		args = (char **)malloc(sizeof(char *) * 100);
 		if (args == NULL)
 		{
 			perror("Memory allocation fail");
 			exit(EXIT_FAILURE);
 		}
-		str_TOKENIZE(input, args);
+		strTOKENIZE(input, args);
 		executeCOMMAND(args, envp);
 		free(args);
 	}

@@ -67,3 +67,29 @@ char *_strtok(char *str, const char *delim)
 
 	return (tokenSTART);
 }
+
+
+/**
+ *  strTOKENIZE - tokenize a command accepted from user
+ * @input: user input to be tokenized
+ * @args: buffer to store the tokenized string
+ *
+ * Return: array of tokenized user input
+ */
+
+char **strTOKENIZE(char *input, char **args)
+{
+	char *token = NULL;
+	int ac = 0;
+
+	token = _strtok(input, " ");
+	while (token != NULL)
+	{
+		args[ac] = token;
+		ac++;
+		token = _strtok(NULL, " ");
+	}
+	args[ac] = NULL;
+	return (args);
+}
+
