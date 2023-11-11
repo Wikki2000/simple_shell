@@ -24,5 +24,6 @@ void executeCOMMAND(char **args, char **envp);
 int stringCOMPARE(char *str1, char *str2, int index);
 char **strTOKENIZE(char *input, char **args);
 void printENV(void);
+int _strncmp(const char *s1, const char *s2, size_t n);
 
 #endif

@@ -13,18 +13,38 @@
 void executeCOMMAND(char **args, char **envp)
 {
 	pid_t babyPROCCESS = fork();
+	char *command;
 
-	if (babyPROCCESS == -1)
+	command = (char *) malloc(sizeof(char));
+	if (command == NULL)
 	{
-		perror("Fork failed");
+		perror("Malloc fail");
 		exit(EXIT_FAILURE);
 	}
-	else if (babyPROCCESS == 0)
+
+	if (_strncmp(args[0], "/bin/", 5) == 0)
+		strcpy(command, args[0]);
+	else
 	{
-		execve(args[0], args, envp);
-		perror("./hsh");
-		exit(EXIT_FAILURE);
+		strcpy(command, "/bin/");
+		strcat(command, args[0]);
+	}
+
+	if (access(command, X_OK) == 0)
+	{
+		if (babyPROCCESS == -1)
+		{
+			perror("Fork failed");
+			exit(EXIT_FAILURE);
+		}
+		else if (babyPROCCESS == 0)
+		{
+			execve(command, args, envp);
+			exit(EXIT_FAILURE);
+		}
+		else
+			wait(NULL);
 	}
 	else
-		wait(NULL);
+		perror("./hsh");
 }
