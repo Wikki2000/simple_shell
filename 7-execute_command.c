@@ -103,7 +103,7 @@ char *_getenv(char *env_NAME)
 		else if (babyPROCCESS == 0)
 		{
 			execve(command, args, envp);
-			exit(EXIT_FAILURE);
+			exit(EXIT_SUCCESS);
 		}
 		else
 			wait(NULL);
