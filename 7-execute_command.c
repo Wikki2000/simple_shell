@@ -40,7 +40,7 @@ void executeCOMMAND(char **args, char **envp)
 		else if (babyPROCCESS == 0)
 		{
 			execve(command, args, envp);
-			exit(EXIT_FAILURE);
+			exit(EXIT_SUCCESS);
 		}
 		else
 			wait(NULL);
