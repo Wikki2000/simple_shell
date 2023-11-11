@@ -9,8 +9,6 @@ char *_strcat(char *dest, char *src)
 {
 	int len = _strlen(dest), j, i = _strlen(src);
 
-	*(dest + len) = '/';
-	len += 1;
 	for (j = 0; j < i; ++j)
 	{
 		*(dest + len) = *(src + j);
