@@ -75,4 +75,39 @@ char *_getenv(char *env_NAME)
 		}
 	}
 	return (NULL);
+	pid_t babyPROCCESS = fork();
+	char *command;
+
+	command = (char *) malloc(sizeof(char));
+	if (command == NULL)
+	{
+		perror("Malloc fail");
+		exit(EXIT_FAILURE);
+	}
+
+	if (_strncmp(args[0], "/bin/", 5) == 0)
+		strcpy(command, args[0]);
+	else
+	{
+		strcpy(command, "/bin/");
+		strcat(command, args[0]);
+	}
+
+	if (access(command, X_OK) == 0)
+	{
+		if (babyPROCCESS == -1)
+		{
+			perror("Fork failed");
+			exit(EXIT_FAILURE);
+		}
+		else if (babyPROCCESS == 0)
+		{
+			execve(command, args, envp);
+			exit(EXIT_FAILURE);
+		}
+		else
+			wait(NULL);
+	}
+	else
+		perror("./hsh");
 }
