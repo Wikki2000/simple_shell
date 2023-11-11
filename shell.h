@@ -24,5 +24,8 @@ void executeCOMMAND(char **args, char **envp);
 int stringCOMPARE(char *str1, char *str2, int index);
 char **strTOKENIZE(char *input, char **args);
 void printENV(void);
+char *_getenv(char *env_NAME);
+char *_strcat(char *dest, char *src);
+char *_strcpy(char *dest, char *src);
 
 #endif
