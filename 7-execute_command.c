@@ -14,15 +14,19 @@ void executeCOMMAND(char **args, char **envp)
 {
 	char command[100];
 	pid_t babyPROCCESS;
-	int isError = 1;
 
+	/* Check if full command path is given or not */
 	if (args[0][0] == '/')
+		_strcpy(command, args[0]);
+	else if (args[0][0] == '.')
 		_strcpy(command, args[0]);
 	else
 	{
 		_strcpy(command, "/bin/");
 		_strcat(command, args[0]);
 	}
+
+	/* Check if command exist */
 	if (access(command, X_OK) == 0)
 	{
 		babyPROCCESS = fork();
@@ -34,15 +38,11 @@ void executeCOMMAND(char **args, char **envp)
 		else if (babyPROCCESS == 0)
 		{
 			execve(command, args, envp);
-			perror("./hsh");
-			exit(EXIT_FAILURE);
+			exit(EXIT_SUCCESS);
 		}
 		else
-		{
-			isError = 0;
 			wait(NULL);
-		}
 	}
-	if (isError)
+	else
 		perror("./hsh");
 }
