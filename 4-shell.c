@@ -30,6 +30,13 @@ int main(int argc, char **argv, char **envp)
 			printENV();
 			continue;
 		}
+		else if (strncmp(input, "setenv", 6) == 0)
+		{
+			strTOKENIZE(input, args);
+			_setenv(args[1], args[2], 1);
+			free(args);
+			continue;
+		}
 		else if (stringCOMPARE(input, "cd", 0) == 0 || strncmp(input, "cd ", 3) == 0)
 		{
 			changeDIRECTORY(input);
