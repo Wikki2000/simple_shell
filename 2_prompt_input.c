@@ -14,7 +14,7 @@ int getINPUT(char **buff, size_t *size)
 {
 	int val, n;
 
-	write(STDOUT_FILENO, "#cisfun$ ", 9);
+	write(STDOUT_FILENO, "# ", 2);
 	fflush(stdout);
 	val = _getline(buff, size, STDIN_FILENO);
 

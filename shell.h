@@ -27,5 +27,8 @@ void printENV(void);
 int _strncmp(const char *s1, const char *s2, size_t n);
 char *_strcpy(char *dest, char *src);
 char *_strcat(char *dest, char *src);
+void changeDIRECTORY(char *input);
+int print_decimal(int num);
+int _putchar(char c);
 
 #endif

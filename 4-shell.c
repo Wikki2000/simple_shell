@@ -10,32 +10,31 @@
  *
  * Return: Always (0)
  */
-
 int main(int argc, char **argv, char **envp)
 {
-	char *input = NULL, **args = NULL;
+	char **args = NULL, *input = NULL;
 	size_t size = 0;
-	int val;
 
 	(void)argc;
 	(void)argv;
 
 	for (;;)
 	{
-		val = getINPUT(&input, &size);
-		if (val == -1)
-			break;
+		getINPUT(&input, &size);
 		if (_strlen(input) == 0)
 			continue;
 		if (stringCOMPARE(input, "exit", 0) == 0)
 			exit(EXIT_SUCCESS);
-
 		else if (stringCOMPARE(input, "env", 0) == 0)
 		{
 			printENV();
 			continue;
 		}
-
+		else if (stringCOMPARE(input, "cd", 0) == 0 || strncmp(input, "cd ", 3) == 0)
+		{
+			changeDIRECTORY(input);
+			continue;
+		}
 		args = (char **)malloc(sizeof(char *) * 100);
 		if (args == NULL)
 		{

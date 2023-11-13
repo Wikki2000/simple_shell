@@ -14,6 +14,7 @@ void executeCOMMAND(char **args, char **envp)
 {
 	char command[100];
 	pid_t babyPROCCESS;
+	int count =  1;
 
 	/* Check if full command path is given or not */
 	if (args[0][0] == '/')
@@ -44,5 +45,11 @@ void executeCOMMAND(char **args, char **envp)
 			wait(NULL);
 	}
 	else
-		perror("./hsh");
+	{
+		write(STDOUT_FILENO, "./hsh: 1: ", 10);
+		write(STDOUT_FILENO, command, _strlen(command));
+		write(STDOUT_FILENO, ": not found", 11);
+		write(STDOUT_FILENO, "\n", 1);
+		count++;
+	}
 }
