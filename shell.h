@@ -30,5 +30,10 @@ char *_strcat(char *dest, char *src);
 void changeDIRECTORY(char *input);
 int print_decimal(int num);
 int _putchar(char c);
+char *_envCAT(char *dest, char *src);
+char *_envCOPY(char *dest, char *src);
+int setNewENVIRON(char *newENV, char **newENVIRON,
+		char *envNAME, char *envVALUE);
+int _setenv(char *envNAME, char *envVALUE, int overWrite);
 
 #endif
