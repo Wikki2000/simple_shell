@@ -30,7 +30,7 @@ int main(int argc, char **argv, char **envp)
 			printENV();
 			continue;
 		}
-		else if (strncmp(input, "setenv", 6) == 0)
+		else if (_strncmp(input, "setenv", 6) == 0)
 		{
 			strTOKENIZE(input, args);
 			_setenv(args[1], args[2], 1);
@@ -42,7 +42,7 @@ int main(int argc, char **argv, char **envp)
 			changeDIRECTORY(input);
 			continue;
 		}
-		else if (strncmp(input, "#", 1) == 0)
+		else if (_strncmp(input, "#", 1) == 0)
 		{
 			free(input);
 			continue;

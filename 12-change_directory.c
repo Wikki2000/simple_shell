@@ -39,7 +39,7 @@ void changeDIRECTORY(char *input)
 	if (stringCOMPARE(input, "cd", 0) == 0)
 		directory = _getenv("HOME");
 	else if (_strncmp(input, "cd ", 3) == 0)
-		directory = strtok(input + 3, " ");
+		directory = _strtok(input + 3, " ");
 
 	if (chdir(directory) == -1)
 	{
@@ -52,7 +52,7 @@ void changeDIRECTORY(char *input)
 	else
 	{
 		if (getcwd(cwd, sizeof(cwd)) != NULL)
-			setenv("PWD", cwd, 1);
+			_setenv("PWD", cwd, 1);
 		else
 			perror("getcwd failed");
 	}
