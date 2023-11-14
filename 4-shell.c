@@ -42,6 +42,11 @@ int main(int argc, char **argv, char **envp)
 			changeDIRECTORY(input);
 			continue;
 		}
+		else if (strncmp(input, "#", 1) == 0)
+		{
+			free(input);
+			continue;
+		}
 		args = (char **)malloc(sizeof(char *) * 100);
 		if (args == NULL)
 		{

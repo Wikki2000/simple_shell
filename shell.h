@@ -13,7 +13,7 @@
 
 extern char **environ;
 
-int _strlen(char *str);
+int _strlen(const char *str);
 char *_memcpy(char *dest, char *src, unsigned int n);
 ssize_t _getline(char **inputPTR, size_t *size, int input_STREAM);
 int handle_failure(char *ptr);
@@ -28,12 +28,11 @@ int _strncmp(const char *s1, const char *s2, size_t n);
 char *_strcpy(char *dest, char *src);
 char *_strcat(char *dest, char *src);
 void changeDIRECTORY(char *input);
-int print_decimal(int num);
-int _putchar(char c);
 char *_envCAT(char *dest, char *src);
 char *_envCOPY(char *dest, char *src);
 int setNewENVIRON(char *newENV, char **newENVIRON,
 		char *envNAME, char *envVALUE);
 int _setenv(char *envNAME, char *envVALUE, int overWrite);
+char *_getenv(const char *name);
 
 #endif

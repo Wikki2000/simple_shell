@@ -1,6 +1,31 @@
 #include "shell.h"
 
 /**
+ * _getenv - Function that gets the value of an environment variable.
+ * @name: Name of the environment variable.
+ *
+ * Return: The value of the environment variable, or NULL if not found.
+ */
+char *_getenv(const char *name)
+{
+	int len, i;
+	len = _strlen(name);
+
+	/* Iterate through each environment variable */
+	for (i = 0; environ[i]; i++)
+	{
+		/* Check if the variable matches the provided name */
+		if (_strncmp(environ[i], name, len) == 0)
+		{
+			/* Return the value of the environment variable */
+			return (environ[i] + len + 1);
+		}
+	}
+
+	return (NULL);
+}
+
+/**
  * changeDIRECTORY - Change CWD to a specified directory enter by user
  * @input: The command enter to change directory
  *
@@ -12,7 +37,7 @@ void changeDIRECTORY(char *input)
 	char *directory = NULL;
 
 	if (stringCOMPARE(input, "cd", 0) == 0)
-		directory = getenv("HOME");
+		directory = _getenv("HOME");
 	else if (_strncmp(input, "cd ", 3) == 0)
 		directory = strtok(input + 3, " ");
 
