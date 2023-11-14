@@ -13,7 +13,7 @@
 
 extern char **environ;
 
-int _strlen(const char *str);
+int _strlen(const char *string);
 char *_memcpy(char *dest, char *src, unsigned int n);
 ssize_t _getline(char **inputPTR, size_t *size, int input_STREAM);
 int handle_failure(char *ptr);
