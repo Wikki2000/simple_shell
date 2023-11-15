@@ -14,7 +14,6 @@ int main(int argc, char **argv, char **envp)
 {
 	char **args = NULL, *input = NULL;
 	size_t size = 0;
-
 	(void)argc;
 	(void)argv;
 
@@ -25,9 +24,11 @@ int main(int argc, char **argv, char **envp)
 			continue;
 		if (stringCOMPARE(input, "exit", 0) == 0)
 			exit(EXIT_SUCCESS);
-		else if (stringCOMPARE(input, "env", 0) == 0)
+		else if (stringCOMPARE(input, "env", 0) == 0
+			|| (stringCOMPARE(input, "cd", 0) == 0
+			|| strncmp(input, "cd ", 3) == 0) || _strncmp(input, "#", 1) == 0)
 		{
-			printENV();
+			handleCOMMAND(input);
 			continue;
 		}
 		else if (_strncmp(input, "setenv", 6) == 0)
@@ -35,16 +36,6 @@ int main(int argc, char **argv, char **envp)
 			strTOKENIZE(input, args);
 			_setenv(args[1], args[2], 1);
 			free(args);
-			continue;
-		}
-		else if (stringCOMPARE(input, "cd", 0) == 0 || strncmp(input, "cd ", 3) == 0)
-		{
-			changeDIRECTORY(input);
-			continue;
-		}
-		else if (_strncmp(input, "#", 1) == 0)
-		{
-			free(input);
 			continue;
 		}
 		args = (char **)malloc(sizeof(char *) * 100);
@@ -59,4 +50,19 @@ int main(int argc, char **argv, char **envp)
 	}
 	free(input);
 	return (0);
+}
+/**
+ * handleCOMMAND - Execute the commands accepted
+ * @input: A command to be executes
+ *
+ * Description: Execute the commands passed as an argument
+ */
+void handleCOMMAND(char *input)
+{
+	if (stringCOMPARE(input, "env", 0) == 0)
+		printENV();
+	else if (stringCOMPARE(input, "cd", 0) == 0 || strncmp(input, "cd ", 3) == 0)
+		changeDIRECTORY(input);
+	else if (_strncmp(input, "#", 1) == 0)
+		free(input);
 }
