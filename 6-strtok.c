@@ -82,12 +82,12 @@ char **strTOKENIZE(char *input, char **args)
 	char *token = NULL;
 	int ac = 0;
 
-	token = _strtok(input, " ");
+	token = strtok(input, " ");
 	while (token != NULL)
 	{
 		args[ac] = token;
 		ac++;
-		token = _strtok(NULL, " ");
+		token = strtok(NULL, " ");
 	}
 	args[ac] = NULL;
 	return (args);
