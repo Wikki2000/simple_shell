@@ -15,6 +15,7 @@ char *getINPUT(void)
 	size_t size = 0;
 
 	write(STDOUT_FILENO, "#cisfun$ ", 9);
+	fflush(stdout);
 
 	/* Handle error in reading input */
 	if (getline(&buff, &size, stdin) == -1)
