@@ -11,7 +11,7 @@
  *
  * Return: Void
  */
-void executeCOMMAND(char *args[], char **envp, char *exec)
+void executeCOMMAND(char *args[], char *exec)
 {
 	pid_t babyPROCCESS = fork();
 
@@ -22,7 +22,7 @@ void executeCOMMAND(char *args[], char **envp, char *exec)
 	}
 	else if (babyPROCCESS == 0)
 	{
-		if (execve(args[0], args, envp) == -1)
+		if (execve(args[0], args, environ) == -1)
 		{
 			perror(exec);
 			exit(EXIT_FAILURE);

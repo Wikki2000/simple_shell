@@ -9,11 +9,11 @@
  *
  * Return: Always (0)
  */
-int main(int argc, char **args, char **envp)
+int main(int argc, char *args[])
 {
 	char *input = NULL, *command[2];
-	(void)argc;
 
+	(void)argc;
 	for (;;)
 	{
 		input = getINPUT();
@@ -24,7 +24,7 @@ int main(int argc, char **args, char **envp)
 		}
 		command[0] = input;
 		command[1] = NULL;
-		executeCOMMAND(command, envp, args[0]);
+		executeCOMMAND(command, args[0]);
 	}
 	free(input);
 	return (0);
