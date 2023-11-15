@@ -1,5 +1,3 @@
-#include "shell.h"
-
 /**
  * _strlen - Calculate lenght of a string
  * @string: Pointer to the string whoose lenght is to be calculated
@@ -15,6 +13,5 @@ int _strlen(const char *string)
 		count++;
 		string++;
 	}
-
 	return (count);
 }
