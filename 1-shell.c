@@ -12,14 +12,15 @@
  */
 int main(int argc, char **args, char **envp)
 {
+	char **command, *input;
+	int i;
+
 	(void)args;
 	(void)argc;
 
 	for (;;)
 	{
-		char *input = getINPUT();
-		char **command;
-
+		input = getINPUT();
 		if (_strlen(input) == 0)
 		{
 			free(input);
