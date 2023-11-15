@@ -17,9 +17,7 @@ int main(int argc, char **args, char **envp)
 
 	for (;;)
 	{
-		int i;
 		char *input = getINPUT();
-		char *token;
 		char **command;
 
 		if (_strlen(input) == 0)
@@ -35,14 +33,8 @@ int main(int argc, char **args, char **envp)
 			exit(EXIT_FAILURE);
 		}
 
-		token  = strtok(input, " ");
-		command[0] = token;
-		for (i = 1; token != NULL; i++)
-		{
-			token = strtok(NULL, " ");
-			command[i] = token;
-		}
-		command[i] = NULL;
+		command[0] = input;
+		command[1] = NULL;
 		executeCOMMAND(command, envp);
 		free(input);
 	}
