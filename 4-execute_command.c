@@ -23,13 +23,11 @@ void executeCOMMAND(char **args, char **envp)
 	{
 		if (execve(args[0], args, envp) == -1)
 		{
-			perror("./hsh");
+			perror("./shell");
 			exit(EXIT_FAILURE);
 		}
 	}
 	else
-	{
 		wait(NULL);
-	}
 }
 
