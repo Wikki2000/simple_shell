@@ -10,7 +10,7 @@
  *
  * Return: Void
  */
-void executeCOMMAND(char **args, char **envp)
+void executeCOMMAND(char *args[], char **envp, char *exec)
 {
 	pid_t babyPROCCESS = fork();
 
@@ -23,7 +23,7 @@ void executeCOMMAND(char **args, char **envp)
 	{
 		if (execve(args[0], args, envp) == -1)
 		{
-			perror("./shell");
+			perror(exec);
 			exit(EXIT_FAILURE);
 		}
 	}
