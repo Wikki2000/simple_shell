@@ -13,5 +13,8 @@
 
 extern char **environ;
 
+void executeCOMMAND(char **args, char **envp);
 int _strlen(const char *string);
+char *getINPUT(void);
+
 #endif

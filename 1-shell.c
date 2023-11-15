@@ -3,60 +3,48 @@
 /**
  * main - Entry point of program
  * @argc: Command-line arguement count
- * @argv: An array of command-line arguement
+ * @args: An array of command-line arguement
  * @envp: Environment variable
  *
  * Description: This program implement a simple shell
  *
  * Return: Always (0)
  */
-int main(int argc, char **argv, char **envp)
+int main(int argc, char **args, char **envp)
 {
-	char *input = NULL;
-	size_t size = 0;
-	pid_t babyPROCCESS = fork();
-	char **args;
+	(void)args;
+	(void)argc;
 
 	for (;;)
 	{
-		write(STDOUT_FILENO, "# ", 2);
-		if (getline(&input, &size, stdin) == -1)
+		int i;
+		char *input = getINPUT();
+		char *token;
+		char **command;
+
+		if (_strlen(input) == 0)
 		{
-			perror("getline failed");
 			free(input);
+			continue;
+		}
+
+		command = (char **) malloc(sizeof(char *) * 100);
+		if (command == NULL)
+		{
+			perror("Memory allocation fail");
 			exit(EXIT_FAILURE);
 		}
 
-		args = (char **) malloc(sizeof(char *) * _strlen(input));
-		if (args == -1)
+		token  = strtok(input, " ");
+		command[0] = token;
+		for (i = 1; token != NULL; i++)
 		{
-			perror("Memory allocation failed");
-			free(input);
-			free(args);
-			exit(EXIT_FAILURE);
+			token = strtok(NULL, " ");
+			command[i] = token;
 		}
-		args[0] = input;
-		args[1] = NULL;
-		if (babyPROCCESS == -1)
-		{
-			perror("fork failed");
-			free(input);
-			free(args);
-			exit(EXIT_FAILURE);
-		}
-		else if (babyPROCCESS == 0)
-		{
-			if (excecve(args[0], args, envp) == -1)
-			{
-				perror("./hsh");
-				free(input);
-				free(args);
-			}
-		}
-		else
-			wait(NULL);
-	}
+		command[i] = NULL;
+		executeCOMMAND(command, envp);
 		free(input);
-		free(args);
-		return (0);
+	}
+	return (0);
 }
