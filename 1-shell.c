@@ -1,5 +1,4 @@
 #include "shell.h"
-
 /**
  * main - Entry point of program
  * @argc: Command-line arguement count
@@ -12,10 +11,7 @@
  */
 int main(int argc, char **args, char **envp)
 {
-	char **command, *input;
-	int i;
-
-	(void)args;
+	char *input = NULL, *command[2];
 	(void)argc;
 
 	for (;;)
@@ -26,20 +22,10 @@ int main(int argc, char **args, char **envp)
 			free(input);
 			continue;
 		}
-
-		command = (char **) malloc(sizeof(char *) * 100);
-		if (command == NULL)
-		{
-			perror("Memory allocation fail");
-			exit(EXIT_FAILURE);
-		}
-
 		command[0] = input;
 		command[1] = NULL;
-		executeCOMMAND(command, envp);
-                for (i = 0; command[i]; i++)
-                        free(command[i]);
-		free(command);
+		executeCOMMAND(command, envp, args[0]);
 	}
+	free(input);
 	return (0);
 }
