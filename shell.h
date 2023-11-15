@@ -13,7 +13,7 @@
 
 extern char **environ;
 
-void executeCOMMAND(char **args, char **envp);
+void executeCOMMAND(char **args, char **envp, char *exec);
 int _strlen(const char *string);
 char *getINPUT(void);
 
