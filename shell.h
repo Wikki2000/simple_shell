@@ -11,8 +11,6 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-extern char **environ;
-
 void executeCOMMAND(char **args, char **envp, char *exec);
 int _strlen(const char *string);
 char *getINPUT(void);
