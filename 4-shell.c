@@ -25,12 +25,13 @@ int main(int argc, char **argv, char **envp)
 		if (stringCOMPARE(input, "exit", 0) == 0)
 			exit(EXIT_SUCCESS);
 		else if (stringCOMPARE(input, "env", 0) == 0
-			|| (stringCOMPARE(input, "cd", 0) == 0
-			|| strncmp(input, "cd ", 3) == 0) || _strncmp(input, "#", 1) == 0)
+			|| (stringCOMPARE(input, "cd", 0) == 0 || strncmp(input, "cd ", 3) == 0))
 		{
 			handleCOMMAND(input);
 			continue;
 		}
+		else if (_strncmp(input, "#", 1) == 0)
+			continue;
 		else if (_strncmp(input, "setenv", 6) == 0)
 		{
 			strTOKENIZE(input, args);
@@ -63,6 +64,4 @@ void handleCOMMAND(char *input)
 		printENV();
 	else if (stringCOMPARE(input, "cd", 0) == 0 || strncmp(input, "cd ", 3) == 0)
 		changeDIRECTORY(input);
-	else if (_strncmp(input, "#", 1) == 0)
-		free(input);
 }
