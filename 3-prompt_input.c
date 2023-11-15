@@ -19,7 +19,7 @@ char *getINPUT(void)
 	/* Handle error in reading input */
 	if (getline(&buff, &size, stdin) == -1)
 	{
-		perror("getline failed");
+		write(STDOUT_FILENO, "\n", 1);
 		exit(EXIT_FAILURE);
 	}
 
