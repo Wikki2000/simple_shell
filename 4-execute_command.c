@@ -4,6 +4,7 @@
  * executeCOMMAND - Execute a command in a child process
  * @args: Array of strings representing the command and its arguments
  * @envp: Array of strings representing the environment variables
+ * @exec: Executable file name
  *
  * Description: This function creates a child process using fork()
  * and executes the command using execve.
