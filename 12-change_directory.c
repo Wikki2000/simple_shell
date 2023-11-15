@@ -9,6 +9,7 @@
 char *_getenv(const char *name)
 {
 	int len, i;
+
 	len = _strlen(name);
 
 	/* Iterate through each environment variable */
