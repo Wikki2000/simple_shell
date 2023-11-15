@@ -37,6 +37,7 @@ int main(int argc, char **args, char **envp)
 		command[1] = NULL;
 		executeCOMMAND(command, envp);
 		free(input);
+		free(command);
 	}
 	return (0);
 }
