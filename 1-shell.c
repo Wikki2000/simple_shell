@@ -12,51 +12,51 @@
  */
 int main(int argc, char **argv, char **envp)
 {
-	char **args = NULL, *input = NULL;
+	char *input = NULL;
 	size_t size = 0;
-
-	(void)argc;
-	(void)argv;
+	pid_t babyPROCCESS = fork();
+	char **args;
 
 	for (;;)
 	{
-		getINPUT(&input, &size);
-		if (_strlen(input) == 0)
-			continue;
-		if (stringCOMPARE(input, "exit", 0) == 0)
-			exit(EXIT_SUCCESS);
-		else if (stringCOMPARE(input, "env", 0) == 0)
+		write(STDOUT_FILENO, "# ", 2);
+		if (getline(&input, &size, stdin) == -1)
 		{
-			printENV();
-			continue;
-		}
-		else if (_strncmp(input, "setenv", 6) == 0)
-		{
-			strTOKENIZE(input, args);
-			_setenv(args[1], args[2], 1);
-			free(args);
-			continue;
-		}
-		else if (stringCOMPARE(input, "cd", 0) == 0 || strncmp(input, "cd ", 3) == 0)
-		{
-			changeDIRECTORY(input);
-			continue;
-		}
-		else if (_strncmp(input, "#", 1) == 0)
-		{
+			perror("getline failed");
 			free(input);
-			continue;
-		}
-		args = (char **)malloc(sizeof(char *) * 100);
-		if (args == NULL)
-		{
-			perror("Memory allocation fail");
 			exit(EXIT_FAILURE);
 		}
-		strTOKENIZE(input, args);
-		executeCOMMAND(args, envp);
-		free(args);
+
+		args = (char **) malloc(sizeof(char *) * _strlen(input));
+		if (args == -1)
+		{
+			perror("Memory allocation failed");
+			free(input);
+			free(args);
+			exit(EXIT_FAILURE);
+		}
+		args[0] = input;
+		args[1] = NULL;
+		if (babyPROCCESS == -1)
+		{
+			perror("fork failed");
+			free(input);
+			free(args);
+			exit(EXIT_FAILURE);
+		}
+		else if (babyPROCCESS == 0)
+		{
+			if (excecve(args[0], args, envp) == -1)
+			{
+				perror("./hsh");
+				free(input);
+				free(args);
+			}
+		}
+		else
+			wait(NULL);
 	}
-	free(input);
-	return (0);
+		free(input);
+		free(args);
+		return (0);
 }
