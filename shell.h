@@ -30,6 +30,7 @@ char *_strcat(char *dest, char *src);
 void changeDIRECTORY(char *input);
 char *_envCAT(char *dest, char *src);
 char *_envCOPY(char *dest, char *src);
+void handleCOMMAND(char *input);
 int setNewENVIRON(char *newENV, char **newENVIRON,
 		char *envNAME, char *envVALUE);
 int _setenv(char *envNAME, char *envVALUE, int overWrite);
