@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * my_strncmp - Compare two strings up to a specified length.
+ * _strncmp - Compare two strings up to a specified length.
  * @s1: The first string to compare.
  * @s2: The second string to compare.
  * @n: The maximum number of characters to compare.
