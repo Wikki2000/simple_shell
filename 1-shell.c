@@ -36,10 +36,9 @@ int main(int argc, char **args, char **envp)
 
 		command[0] = input;
 		command[1] = NULL;
-		for (i = 0; command[i]; i++)
-			free(command[i]);
 		executeCOMMAND(command, envp);
-		free(input);
+                for (i = 0; command[i]; i++)
+                        free(command[i]);
 		free(command);
 	}
 	return (0);
