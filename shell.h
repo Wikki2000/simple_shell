@@ -12,6 +12,6 @@
 #include <sys/wait.h>
 #include <stdbool.h>
 
-void execute_command(char **args);
+void execute_command(char **args, char **envp);
 int _strlen(const char *string);
 #endif
