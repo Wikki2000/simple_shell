@@ -3,7 +3,7 @@
 int main(int argc, char **argv, char **envp)
 {
 	char *input = NULL;
-	char *args[20];
+	char **args;
 	size_t size = 0;
 	ssize_t bytes;
 	bool is_pipe = true;
@@ -25,10 +25,17 @@ int main(int argc, char **argv, char **envp)
 		if (input[bytes - 1] == '\n')
 			input[bytes - 1] = '\0';
 
-
+		args = (char **) malloc(sizeof(char **) * 100);
+		if (args == NULL)
+		{
+			perror("Malloc failed");
+			free(args);
+			free(input);
+			exit(EXIT_FAILURE);
+		}
 		strTOKENIZE(input, args);
 		execute_command(args, envp);
-		free(input);
+		free(args);
 	}
 
 	return 0;
