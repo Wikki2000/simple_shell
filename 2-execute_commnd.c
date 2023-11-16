@@ -12,7 +12,7 @@ void execute_command(char **args, char **envp)
     else if (pid == 0)
     {
         execve(args[0], args, envp);
-        perror("execvp failed");
+        perror("./hsh");
         exit(EXIT_FAILURE);
     }
     else 

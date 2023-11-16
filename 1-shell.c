@@ -37,6 +37,7 @@ int main(int argc, char **argv, char **envp)
 
 		strTOKENIZE(input, args);
 		execute_command(args, envp);
+		free(input);
 	}
 	free(input);
 
