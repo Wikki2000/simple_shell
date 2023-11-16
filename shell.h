@@ -14,4 +14,5 @@
 
 void execute_command(char **args, char **envp);
 int _strlen(const char *string);
+char **strTOKENIZE(char *input, char **args);
 #endif
