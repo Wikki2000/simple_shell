@@ -18,17 +18,6 @@
 
 extern char **environ;
 
-/**
- * struct builtin - blueprint for builtin command function pointer
- * @cmd: command
- * @builtin_func: function pointer
- */
-
-typedef struct builtin
-{
-	char *cmd;
-	int (*builtin_func)(char **, char *, char **, int *);
-} builtin_cmd;
 
 void free_memory(char **tokens);
 void getINPUT(void);

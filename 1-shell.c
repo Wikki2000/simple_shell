@@ -30,6 +30,7 @@ int main(__attribute__((unused)) int argc, char **argv, char **envp)
 		if (tokens == NULL)
 			continue;
 		ret = process_cmd(tokens, argv[0], environ, &ret);
+		free(input);
 	}
 	free_memory(environ);
 	return (ret);
