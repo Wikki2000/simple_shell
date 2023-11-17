@@ -1,5 +1,5 @@
 #ifndef SHELL_H
-#define SHELL_H
+11;rgb:0000/0000/0000#define SHELL_H
 
 #define BUFFER_SIZE 128
 #define MAX_COMMAND_LENGTH 64
@@ -15,4 +15,6 @@
 void execute_command(char **args, char **envp);
 int _strlen(const char *string);
 char **strTOKENIZE(char *input, char **args);
+char **copyENVIRON(char **env);
+void freeMEMORY(char **arr);
 #endif
