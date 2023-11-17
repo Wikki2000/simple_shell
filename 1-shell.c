@@ -1,43 +1,42 @@
 #include "shell.h"
 
-int main(int argc, char **argv, char **envp)
+/**
+ * main - entry point.
+ * @argc: argument count from commandline
+ * @envp: environment
+ * @argv: pointer to an array of argument from commandline.
+ * Return: succes code on success or error code on error
+ */
+
+int main(__attribute__((unused)) int argc, char **argv, char **envp)
 {
-	char *input = NULL;
-	char **args;
-	size_t size = 0;
-	ssize_t bytes;
-	bool is_pipe = true;
+	char *buffer, *sep;
+	ssize_t rbyte;
+	size_t buff_size;
+	char **tokens, *buf;
+	int ret_code = 0;
 
-	(void)argc;
-	(void)argv;
-
-	while (is_pipe)
+	sep = " \n\t";
+	/* make the environment variable dynamic (resizeable) */
+	environ = dynamic_env(envp);
+	while (1)
 	{
-		if (isatty(STDIN_FILENO) == 0)
-			is_pipe = false;
-
-		write(STDOUT_FILENO, "# ", 2);
-		bytes = getline(&input, &size, stdin);
-
-		if (bytes == -1)
-			exit(EXIT_FAILURE);
-
-		if (input[bytes - 1] == '\n')
-			input[bytes - 1] = '\0';
-
-		args = (char **) malloc(sizeof(char **) * 100);
-		if (args == NULL)
-		{
-			perror("Malloc failed");
-			free(args);
-			free(input);
-			exit(EXIT_FAILURE);
-		}
-		strTOKENIZE(input, args);
-		execute_command(args, envp);
-		free(args);
+		buffer = NULL;
+		tokens = NULL;
+		buf = NULL;
+		/* check if the keyboard is connected to the tty (inter. mod)*/
+		if (isatty(STDIN_FILENO))
+			prompt_user();
+		rbyte = _getline(&buffer, &buff_size, STDIN_FILENO);
+		if (handle_rbyte(buffer, rbyte, &ret_code, environ) == 1)
+			continue;
+		buf = preprocess_strtok(buffer);
+		tokens = tokenize_buffer(buf, sep);
+		free(buf);
+		if (tokens == NULL)
+			continue;
+		ret_code = process_cmd(tokens, argv[0], environ, &ret_code);
 	}
-
-	return 0;
+	free_memory(environ);
+	return (ret_code);
 }
-
