@@ -26,6 +26,8 @@ int main(__attribute__((unused)) int argc, char **argv, char **envp)
 		read = getline(&input, &size, stdin);
 		if (handle_rbyte(input, read, &ret, environ) == 1)
 			continue;
+		if (_strcmp(input, "exit") == 0)
+			exit(EXIT_SUCCESS);
 		tokens = tokenize_buffer(input, delim);
 		if (tokens == NULL)
 			continue;
