@@ -1,6 +1,44 @@
 #include "shell.h"
 
 /**
+ * int_to_str - convert int to string
+ * @count: integer to convert
+ * Return: pointer to char array rep. converted integer
+ */
+
+char *int_to_str(int count)
+{
+	int num, temp, rem;
+	char *ptr;
+
+	num = 0;
+	temp = count;
+	while ((temp / 10) > 0)
+	{
+		temp /= 10;
+		num++;
+	}
+	num++;
+
+	ptr = malloc(sizeof(char) * (num + 1));
+	if (ptr == NULL)
+		return (NULL);
+	ptr += num;
+	*ptr = '\0';
+	ptr--;
+	while ((count / 10) != 0)
+	{
+		rem = count % 10;
+		*ptr-- = rem + 48;
+		count /= 10;
+	}
+	rem = count % 10;
+	*ptr = rem + 48;
+	return (ptr);
+}
+
+
+/**
  * _strtok - copies string from source to destination
  * @str: destination
  * @sep: string to copy
@@ -112,4 +150,26 @@ int _strcmp(char *s1, char *s2)
 		i++;
 	}
 	return (0);
+}
+
+/**
+ * _strnstr - locate an n-number of substring in a larger string
+ * @haystack: larger string
+ * @needle: substring to locate
+ * @n: number of byte to locate
+ * Return: pointer to the substring or NULL if not found
+ */
+
+char *_strnstr(char *haystack, char *needle, int n)
+{
+        int i;
+
+        if (needle == NULL)
+                return (haystack);
+        for (i = 0; i < n && haystack[i]; i++)
+        {
+                if (haystack[i] != needle[i])
+                        return (NULL);
+        }
+        return (haystack);
 }

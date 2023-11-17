@@ -22,7 +22,6 @@ extern char **environ;
 void free_memory(char **tokens);
 void getINPUT(void);
 void free2DMEMORY(char **tokens);
-
 int get_N_token(char *buffer, char *sep);
 char **tokenize_buffer(char *buffer, char *sep);
 int handle_rbyte(char *buffer, int rbyte, int *ret_code, char **env);

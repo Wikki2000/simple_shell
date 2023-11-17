@@ -57,7 +57,6 @@ int handle_execution(char **tokens, char *filename, char **env, int *code)
  * @n: number of times a child process fail to execute a command
  * Return: void
  */
-
 void handle_error(char *filename, char *arg, int n)
 {
 	char error[100];
@@ -76,43 +75,6 @@ void handle_error(char *filename, char *arg, int n)
 	strcat(error, "not found\n");
 	write(STDERR_FILENO, error, strlen(error));
 	free(count_str);
-}
-
-/**
- * int_to_str - convert int to string
- * @count: integer to convert
- * Return: pointer to char array rep. converted integer
- */
-
-char *int_to_str(int count)
-{
-	int num, temp, rem;
-	char *ptr;
-
-	num = 0;
-	temp = count;
-	while ((temp / 10) > 0)
-	{
-		temp /= 10;
-		num++;
-	}
-	num++;
-
-	ptr = malloc(sizeof(char) * (num + 1));
-	if (ptr == NULL)
-		return (NULL);
-	ptr += num;
-	*ptr = '\0';
-	ptr--;
-	while ((count / 10) != 0)
-	{
-		rem = count % 10;
-		*ptr-- = rem + 48;
-		count /= 10;
-	}
-	rem = count % 10;
-	*ptr = rem + 48;
-	return (ptr);
 }
 
 /**
