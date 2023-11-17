@@ -27,7 +27,10 @@ int main(__attribute__((unused)) int argc, char **argv, char **envp)
 		if (handle_rbyte(input, read, &ret, environ) == 1)
 			continue;
 		if (_strcmp(input, "exit") == 0)
-			exit(EXIT_SUCCESS);
+		{
+			free(input);
+			handle_exit(argv, &ret);
+		}
 		tokens = tokenize_buffer(input, delim);
 		if (tokens == NULL)
 			continue;

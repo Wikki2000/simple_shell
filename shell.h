@@ -18,6 +18,9 @@
 
 extern char **environ;
 
+int handle_exit(char **argv, int *n);
+void handle_exit_error(char *filename, char **argv, int n, char *msg);
+int _atoi(char *str);
 
 void free_memory(char **tokens);
 void getINPUT(void);

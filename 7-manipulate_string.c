@@ -173,3 +173,32 @@ char *_strnstr(char *haystack, char *needle, int n)
         }
         return (haystack);
 }
+
+/**
+ * _atoi - convert string to integer
+ * @str: string to convert
+ * Return: converted integer
+ */
+
+int _atoi(char *str)
+{
+	int unit = 10, num = 0;
+	char *tmp;
+
+	if (str == NULL)
+		return (-1);
+	tmp = str;
+	while (*tmp)
+	{
+		if (strchr("0123456789", *tmp) == NULL)
+			return (-1);
+		tmp++;
+	}
+	while (*str)
+	{
+		num *= unit;
+		num += (*str - 48);
+		str++;
+	}
+	return (num);
+}
