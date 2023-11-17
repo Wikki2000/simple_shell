@@ -8,33 +8,29 @@
  * Return: succes code on success or error code on error
  */
 
-int main(int argc, char **argv, char **envp)
+int main(__attribute__((unused)) int argc, char **argv, char **envp)
 {
-	char *input, *delim, char **tokens, *buf;
+	char *input, *delim, **tokens;
 	ssize_t read;
-	size_t size;
-	int retCODE = 0;
+	size_t size = 0;
+	int ret = 0;
 
-	sep = " \n\t";
-	/* make the environment variable dynamic (resizeable) */
+	delim = " \n\t";
 	environ = dynamic_env(envp);
 	while (1)
 	{
 		input = NULL;
 		tokens = NULL;
-		buf = NULL;
 		if (isatty(STDIN_FILENO))
-			prompt_user();
-		read = getline(&buffer, &buff_size, STDIN_FILENO);
-		if (handleREAD(input, rbyte, &ret_code, environ) == 1)
+			getINPUT();
+		read = getline(&input, &size, stdin);
+		if (handle_rbyte(input, read, &ret, environ) == 1)
 			continue;
-		buf = preprocess_strtok(buffer);
-		tokens = tokenize_buffer(buf, sep);
-		free(buf);
+		tokens = tokenize_buffer(input, delim);
 		if (tokens == NULL)
 			continue;
-		ret_code = process_cmd(tokens, argv[0], environ, &ret_code);
+		ret = process_cmd(tokens, argv[0], environ, &ret);
 	}
 	free_memory(environ);
-	return (ret_code);
+	return (ret);
 }
