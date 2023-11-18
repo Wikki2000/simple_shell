@@ -21,13 +21,15 @@ extern char **environ;
 int handle_exit(char **argv, int *n);
 void handle_exit_error(char *filename, char **argv, int n, char *msg);
 int _atoi(char *str);
+int _setenv(char *name, char *value, int overwrite);
 char *_getenv(char *name);
+int _putenv(char *new_env);
+int _unsetenv(char *name);
+char **dynamic_env(char **env);
 void changeDIRECTORY(char *input);
-char *_envCAT(char *dest, char *src);
-char *_envCOPY(char *dest, char *src);
 int setNewENVIRON(char *newENV, char **newENVIRON,
 		char *envNAME, char *envVALUE);
-int _setenv(char *envNAME, char *envVALUE, int overWrite);
+int _setenv(char *name, char *value, int overwrite);
 int _strncmp(const char *s1, const char *s2, size_t n);
 char *_strchr(const char *str, int c);
 int stringCOMPARE(char *str1, char *str2, int index);
@@ -54,5 +56,7 @@ char **dynamic_env(char **env);
 void print_env_error(char *file, char *msg);
 char *special_char(char **tokens);
 int flush(char **tokens, int *status);
-
+int handle_setenv(char **tk, char *file, char **env, int *n);
+int handle_builtin(char **tokens, char *filename, char **env, int *n);
+int handle_unsetenv(char **tk, char *file, char **env, int *n);
 #endif
