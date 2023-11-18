@@ -1,126 +1,108 @@
 #include "shell.h"
 
 /**
- * _envCAT - concatenates name and value of environmental variable
- * @dest: holds the new environ
- * @src: name, value or equal sign
- * Return: the new environ
+ * _setenv - set an environment variable
+ * @name: name of environment variable
+ * @value: value of environment variable
+ * @overwrite: (0) - don't overwrite, (1) - overwrite.
+ * Return: (0) - success : (-1) - on error
  */
 
-char *_envCAT(char *dest, char *src)
+int _setenv(char *name, char *value, int overwrite)
 {
-	int len = _strlen(dest), j, i = _strlen(src);
+        char *new_env;
+        int size;
 
-	for (j = 0; j < i; ++j)
-	{
-		*(dest + len) = *(src + j);
-		len++;
-	}
-	return (dest);
+        /* len = len(name) +len(value) + len('=') + len('\0') */
+        size = strlen(name) + strlen(value) + 2;
+        new_env = malloc(sizeof(char) * size);
+        if (new_env == NULL)
+                return (-1);
+        /* construct the new environment */
+        strcpy(new_env, name);
+        strcat(new_env, "=");
+        strcat(new_env, value);
+        strcat(new_env, "\0");
+        if (_getenv(name) == NULL)
+        {
+                if (_putenv(new_env) == -1)
+                        return (-1);
+        }
+        else
+        {
+                if (overwrite == 0)
+                        free(new_env);
+                else
+                {
+                        if (_unsetenv(name) == -1)
+                                return (-1);
+                        if (_putenv(new_env) == -1)
+                                return (-1);
+                }
+        }
+        return (0);
 }
 
 /**
- * _envCOPY - copy name to the new environmental variable
- * @dest: a pointer to store the name of environ
- * @src: name of the environ
- * Return: a new environ contain the name
+ * _getenv - check if an environment variable exist
+ * @name: name of the environment variable
+ * Return: 1 (exist) 0 (does not exist)
  */
 
-char *_envCOPY(char *dest, char *src)
+char *_getenv(char *name)
 {
-	int i, len = _strlen(src);
+        int i;
+        char *env;
 
-	for (i = 0; i < len; ++i)
-	{
-		*(dest + i) = *(src + i);
-	}
-	return (dest);
-}
-/**
- * setNewENVIRON - set new environmntal variable
- * @newENV: a new single environ to be set
- * @newENVIRON: a new environmental variable
- * @envNAME: name of environmental variable
- * @envVALUE: value of environmental variable
- * Return: 0 in Success and -1 on Failuere
- */
-int setNewENVIRON(char *newENV, char **newENVIRON,
-		char *envNAME, char *envVALUE)
-{
-	int count = 0, i;
-
-	newENV = malloc(_strlen(envNAME) + _strlen(envVALUE) + 2);
-	if (newENV == NULL)
-	{
-		perror("Memory allocation Failed.");
-		return (-1);
-	}
-	_envCOPY(newENV, envNAME);
-	_envCAT(newENV, "=");
-	_envCAT(newENV, envVALUE);
-	newENV[_strlen(envNAME) + _strlen(envVALUE) + 1] = '\0';
-	while (environ[count] != NULL)
-		count++;
-	newENVIRON = malloc((count + 2) * sizeof(char *));
-	if (newENVIRON == NULL)
-	{
-		free(newENV);
-		perror("Memory allocation Failed.");
-		return (-1);
-	}
-	for (i = 0; i < count; i++)
-		newENVIRON[i] = environ[i];
-	newENVIRON[count] = newENV;
-	newENVIRON[count + 1] = NULL;
-	environ = newENVIRON;
-	return (0);
+        i = 0;
+        while (environ[i])
+        {
+                env = _strnstr(environ[i], name, _strlen(name));
+                if (env)
+                        return (env);
+                i++;
+        }
+        return (NULL);
 }
 
 /**
- * _setenv - update existing or set new environmntal variable
- * @envNAME: name of environmental variable
- * @envVALUE: value of environmental variable
- * @overWrite: determine whether to overwrite the environ or nor
- * Return: 0 in Success and -1 on Failure
+ * _putenv - put an environment variable into a list of env variables
+ * @new_env: name of the env variable
+ * Return: (0) - success, (-1) - error
  */
-int _setenv(char *envNAME, char *envVALUE, int overWrite)
-{
-	char *equalSIGN,  *newENV = NULL, **newENVIRON = NULL;
-	size_t nameLEN = 0;
-	int i;
 
-	if (envNAME == NULL || envVALUE == NULL)
-	{
-		perror("Input is NULL");
-		return (-1);
-	}
-	for (i = 0; environ[i] != NULL; i++)
-	{
-		equalSIGN = _strchr(environ[i], '=');
-		nameLEN = equalSIGN - environ[i];
-		if (_strncmp(environ[i], envNAME, nameLEN) == 0)
-		{
-			if (!overWrite)
-			{
-				perror("Can not edit environ.");
-				return (-1);
-			}
-			else
-			{
-				newENV = malloc(_strlen(envNAME) + _strlen(envVALUE) + 2);
-				if (newENV == NULL)
-				{
-					perror("Memory allocation failed.");
-					return (-1);
-				}
-				_envCOPY(newENV, envNAME);
-				_envCAT(newENV, "=");
-				_envCAT(newENV, envVALUE);
-				newENV[_strlen(envNAME) + _strlen(envVALUE) + 1] = '\0';
-				environ[i] = newENV;
-			}
-			return (0);
-		}
-	}
-	return (setNewENVIRON(newENV, newENVIRON, envNAME, envVALUE));
+int _putenv(char *new_env)
+{
+        int i, j;
+        char **env_array, *tmp, **tmp1;
+
+        i = 0;
+        while (environ[i])
+                i++;
+        env_array = malloc(sizeof(char *) * (i + 2));
+        if (env_array == NULL)
+        {
+                free(new_env);
+                return (-1);
+        }
+        for (i = 0; environ[i]; i++)
+        {
+                tmp = strdup(environ[i]);
+                if (tmp == NULL)
+                {
+                        for (j = i - 1; j >= 0; j--)
+                                free(env_array[j]);
+                        free_memory(env_array);
+                        free(new_env);
+                        return (-1);
+                }
+                env_array[i] = tmp;
+        }
+        env_array[i] = new_env;
+        i++;
+        env_array[i] = NULL;
+        tmp1 = environ;
+        environ = env_array;
+        free_memory(tmp1);
+        return (0);
 }
