@@ -20,6 +20,11 @@ int handle_builtin(char **tokens, char *filename, char **env, int *n)
                 m = handle_unsetenv(tokens, filename,env,n);
                 return (m);
         }
+	else if (_strncmp("cd", tokens[0], 2) == 0)
+        {
+                m = handle_cd(tokens, filename,env,n);
+                return (m);
+        }
         return (NOT_BUILTIN);
 }
 /**

@@ -59,4 +59,10 @@ int flush(char **tokens, int *status);
 int handle_setenv(char **tk, char *file, char **env, int *n);
 int handle_builtin(char **tokens, char *filename, char **env, int *n);
 int handle_unsetenv(char **tk, char *file, char **env, int *n);
+int handle_cd(char **tk, char *file, char **env, int *n);
+int cd_home(char *file);
+char *getenv_value(char *env_name);
+int cd_path(char *file, char *path);
+int cd_previous_path(char *file);
+void handle_cd_error(char *filename, char **tk, int n, char *msg);
 #endif

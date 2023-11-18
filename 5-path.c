@@ -15,7 +15,6 @@ int handle_path(char **tokens, char *filename, char **env, int *code)
 	static int n = 1;
 	if (handle_builtin(tokens, filename, env, code) != NOT_BUILTIN)
         {
-	  /*free_memory(tokens);*/
                 return (*code);
         }
 	else if (stat(tokens[0], &status) == 0)
