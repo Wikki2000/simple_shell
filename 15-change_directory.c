@@ -6,25 +6,26 @@
  *
  * Return: The value of the environment variable, or NULL if not found.
  */
+/*
 char *_getenv(char *name)
 {
         int len, i;
 
         len = _strlen(name);
 
-        /* Iterate through each environment variable */
-        for (i = 0; environ[i]; i++)
+        Iterate through each environment variable */
+        /*for (i = 0; environ[i]; i++)
         {
-                /* Check if the variable matches the provided name */
-                if (_strncmp(environ[i], name, len) == 0)
+                Check if the variable matches the provided name */
+	/*if (_strncmp(environ[i], name, len) == 0)
                 {
-                        /* Return the value of the environment variable */
-                        return (environ[i] + len + 1);
+                        Return the value of the environment variable */
+	  /*return (environ[i] + len + 1);
                 }
         }
 
         return (NULL);
-}
+	}*/
 
 /**
  * changeDIRECTORY - Change CWD to a specified directory enter by user
@@ -38,9 +39,21 @@ void changeDIRECTORY(char *input)
         char *directory = NULL;
 
         if (stringCOMPARE(input, "cd", 0) == 0)
+	{
                 directory = _getenv("HOME");
+		if (directory == NULL)
+		 {
+		   write(STDOUT_FILENO, "./hsh: 1: cd: HOME not set\n", 28);
+		   return;
+		 }
+	}
         else if (_strncmp(input, "cd ", 3) == 0)
                 directory = _strtok(input + 3, " ");
+	else
+	  {
+	    write(STDOUT_FILENO, "./hsh: 1: cd: invalid command\n", 31);
+	    return;
+	  }
 
         if (chdir(directory) == -1)
         {
