@@ -1,5 +1,4 @@
 #include "shell.h"
-
 /**
  * handle_path - resolve path
  * @tokens: pointer to array of tokens
@@ -14,7 +13,12 @@ int handle_path(char **tokens, char *filename, char **env, int *code)
 	struct stat status;
 	char *path;
 	static int n = 1;
-	if (stat(tokens[0], &status) == 0)
+	if (handle_builtin(tokens, filename, env, code) != NOT_BUILTIN)
+        {
+	  /*free_memory(tokens);*/
+                return (*code);
+        }
+	else if (stat(tokens[0], &status) == 0)
 	{
 		*code = handle_execution(tokens, filename, env, code);
 		free_memory(tokens);
@@ -88,4 +92,3 @@ char *build_full_path(char *cmd, char **env)
 		return (path);
 	return (NULL);
 }
-
