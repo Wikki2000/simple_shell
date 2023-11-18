@@ -32,7 +32,7 @@ int main(__attribute__((unused)) int argc, char **argv, char **envp)
 			handle_exit(argv, &ret);
 		}
 		else if (stringCOMPARE(input, "cd", 0) == 0 || strncmp(input, "cd ", 3) == 0)
-			changeDIRECTORY(input);
+			changeDIRECTORY(input);	 
 		tokens = tokenize_buffer(input, delim);
 		if (tokens == NULL)
 			continue;
